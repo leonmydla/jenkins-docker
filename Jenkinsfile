@@ -1,7 +1,13 @@
 pipeline {
     agent {
-        dockerfile {
-            filename 'Dockerfile'
+        docker {
+            image 'docker:latest'
+        }
+    }
+
+    stages {
+        stage ('Build') {
+            docker build .
         }
     }
 }
