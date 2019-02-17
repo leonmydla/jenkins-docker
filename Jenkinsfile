@@ -3,4 +3,5 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
         }
+    }
 }
