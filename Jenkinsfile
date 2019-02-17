@@ -7,7 +7,7 @@ pipeline {
 
     stages {
         stage ('Build') {
-            docker build .
+            sh 'docker build .'
         }
     }
 }
