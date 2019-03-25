@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t lmydla/jenkins-docker:latest .'
+                sh 'docker build --no-cache -t lmydla/jenkins-docker:latest .'
             }
         }
         stage('Push to registry') {
