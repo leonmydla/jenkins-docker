@@ -1,5 +1,6 @@
 pipeline {
     agent {
+        label 'highUplink'
         docker {
             image 'docker:latest'
         }
