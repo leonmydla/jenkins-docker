@@ -1,7 +1,7 @@
 pipeline {
     agent {
-        label 'highUplink'
         docker {
+            label 'highUplink'
             image 'docker:latest'
         }
     }
