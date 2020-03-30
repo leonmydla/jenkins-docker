@@ -9,15 +9,32 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build --no-cache -t lmydla/jenkins-docker:latest .'
+                parallel(
+                        'master': {
+                            sh 'docker build --no-cache -t lmydla/jenkins-docker:latest master'
+                        },
+                        'slave': {
+                            sh 'docker build --no-cache -t lmydla/jenkins-slave-docker:latest slave'
+                        }
+                )
             }
         }
         stage('Push to registry') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker_lmydla', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
-                    sh 'docker login -u ${dockeruser} -p ${dockerpassword}'
-                    sh 'docker push lmydla/jenkins-docker:latest'
-                }
+                parallel(
+                        'master': {
+                            withCredentials([usernamePassword(credentialsId: 'docker_lmydla', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
+                                sh 'docker login -u ${dockeruser} -p ${dockerpassword}'
+                                sh 'docker push lmydla/jenkins-docker:latest'
+                            }
+                        },
+                        'slave': {
+                            withCredentials([usernamePassword(credentialsId: 'docker_lmydla', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
+                                sh 'docker login -u ${dockeruser} -p ${dockerpassword}'
+                                sh 'docker push lmydla/jenkins-slave-docker:latest'
+                            }
+                        }
+                )
             }
         }
     }
