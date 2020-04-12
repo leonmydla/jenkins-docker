@@ -11,10 +11,10 @@ pipeline {
             steps {
                 parallel(
                         'master': {
-                            sh 'docker build --no-cache -t lmydla/jenkins-docker:latest master'
+                            sh 'docker build --no-cache -t leonmydla/jenkins-docker:latest master'
                         },
                         'slave': {
-                            sh 'docker build --no-cache -t lmydla/jenkins-slave-docker:latest slave'
+                            sh 'docker build --no-cache -t leonmydla/jenkins-slave-docker:latest slave'
                         }
                 )
             }
@@ -23,15 +23,15 @@ pipeline {
             steps {
                 parallel(
                         'master': {
-                            withCredentials([usernamePassword(credentialsId: 'docker_lmydla', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
+                            withCredentials([usernamePassword(credentialsId: 'docker_leonmydla', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
                                 sh 'docker login -u ${dockeruser} -p ${dockerpassword}'
-                                sh 'docker push lmydla/jenkins-docker:latest'
+                                sh 'docker push leonmydla/jenkins-docker:latest'
                             }
                         },
                         'slave': {
-                            withCredentials([usernamePassword(credentialsId: 'docker_lmydla', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
+                            withCredentials([usernamePassword(credentialsId: 'docker_leonmydla', passwordVariable: 'dockerpassword', usernameVariable: 'dockeruser')]) {
                                 sh 'docker login -u ${dockeruser} -p ${dockerpassword}'
-                                sh 'docker push lmydla/jenkins-slave-docker:latest'
+                                sh 'docker push leonmydla/jenkins-slave-docker:latest'
                             }
                         }
                 )
