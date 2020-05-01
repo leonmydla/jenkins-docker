@@ -15,9 +15,11 @@ pipeline {
             steps {
                 parallel(
                         'master': {
+                            sh 'docker pull jenkins/jenkins:alpine'
                             sh 'docker build --no-cache -t leonmydla/jenkins-docker:latest master'
                         },
                         'slave': {
+                            sh 'docker pull jenkins/slave:alpine'
                             sh 'docker build --no-cache -t leonmydla/jenkins-slave-docker:latest slave'
                         }
                 )
