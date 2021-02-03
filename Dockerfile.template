@@ -1,4 +1,4 @@
-FROM jenkins/%%VARIANT%%:latest
+FROM jenkins/%%variant%%:latest
 
 USER root:root
 
