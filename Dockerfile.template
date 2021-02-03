@@ -1,8 +1,8 @@
-FROM jenkins/slave:alpine
+FROM jenkins/%%VARIANT%%:latest
 
 USER root:root
 
 RUN apk add --no-cache \
-		docker
+      docker
 
 USER jenkins:jenkins
