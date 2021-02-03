@@ -35,24 +35,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.template
+          file: ./Dockerfile
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/jenkins:latest
-            ghcr.io/${{ github.repository_owner }}/jenkins:captain-latest
-          build-args: |
-            variant=jenkins
-
-      - name: Build and push
-        if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile.template
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/jenkins:worker-latest
-          build-args: |
-            variant=slave
