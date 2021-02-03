@@ -25,6 +25,7 @@ jobs:
           password: ${{ secrets.CR_PAT }}
 
       - name: Build and push
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -38,6 +39,7 @@ jobs:
             VARIANT=jenkins
 
       - name: Build and push
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v2
         with:
           context: .
